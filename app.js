@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-    
+
   angular.module('NarrowItDownApp', [])
     .controller('NarrowItDownController', NarrowItDownController)
     .service('MenuSearchService', MenuSearchService)
@@ -25,7 +25,13 @@
   function FoundItemsDirectiveController() {
       var ctrl = this;
 
-      
+      ctrl.IsEmpty = function() {
+        if (ctrl.items.length === 0) {
+          return true;
+        }
+
+        return false;
+      };
   }
 
   NarrowItDownController.$inject = ['MenuSearchService'];
@@ -41,11 +47,11 @@
           promise.then(function(result) {
               ctrl.FoundItems = result;
           });
-      }
+      };
 
       ctrl.remove = function (index) {
           ctrl.FoundItems.splice(index, 1)[0];
-      }
+      };
   }
 
   MenuSearchService.$inject = ['$http', 'ApiBasePath'];
@@ -61,7 +67,7 @@
               var foundItems = [];
 
               for (var i = 0; i < returnedItems.length; i++) {
-                  if (returnedItems[i].description.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1 || searchTerm === "") {
+                  if (returnedItems[i].description.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1) {
                       foundItems.push(returnedItems[i]);
                   }
               }
@@ -70,5 +76,5 @@
           });
       };
   }
-  
+
 })();
