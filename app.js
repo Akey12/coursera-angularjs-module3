@@ -26,7 +26,7 @@
       var ctrl = this;
 
       ctrl.IsEmpty = function() {
-        if (ctrl.items.length === 0) {
+        if (ctrl.items != undefined && ctrl.items.length === 0) {
           return true;
         }
 
@@ -39,7 +39,7 @@
       var ctrl = this;
 
       ctrl.SearchTerm = "";
-      ctrl.FoundItems = [];
+     // ctrl.FoundItems = [];
 
       ctrl.applySearch = function() {
           var promise = MenuSearchService.getMatchedMenuItems(ctrl.SearchTerm);
@@ -67,7 +67,7 @@
               var foundItems = [];
 
               for (var i = 0; i < returnedItems.length; i++) {
-                  if (returnedItems[i].description.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1) {
+                  if (searchTerm != "" && returnedItems[i].description.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1) {
                       foundItems.push(returnedItems[i]);
                   }
               }
